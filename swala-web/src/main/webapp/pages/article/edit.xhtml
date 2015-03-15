@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/layouts/app.xhtml"
+                xmlns:article="http://xmlns.jcp.org/jsf/composite/article">
+    <ui:define name="page_title">
+        Редактирование - #{article.current.title}
+    </ui:define>
+    <ui:define name="app_content">
+        <h:form>
+            <article:form articleItem="#{article.current}"/>
+            <h:commandLink value="Сохранить" action="#{article.update()}"/>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

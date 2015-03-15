@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/layouts/app.xhtml"
+                xmlns:news="http://xmlns.jcp.org/jsf/composite/news"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:article="http://xmlns.jcp.org/jsf/composite/article">
+    <ui:define name="page_title">
+        Статьи
+    </ui:define>
+    <ui:define name="app_content">
+        <h3>Статьи</h3>
+        <h:form>
+            <h:link value="Добавить статью" outcome="#{article.gotoCreate()}"/>
+            <article:list articleItems="#{article.all}">
+                <f:facet name="itemFacet">
+                    <h:link outcome="#{article.gotoEdit()}" value="Редактировать">
+                        <f:param name="id" value="#{articleItem.id}"/>
+                    </h:link>
+                </f:facet>
+            </article:list>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

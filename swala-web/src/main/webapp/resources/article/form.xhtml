@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:cc="http://xmlns.jcp.org/jsf/composite">
+    <cc:interface>
+        <cc:attribute name="articleItem" required="true"/>
+    </cc:interface>
+    
+    <cc:implementation>
+        <h:outputLabel value="Название" for="title"/>
+        <h:inputText id="title" value="#{cc.attrs.articleItem.title}"/>
+        <h:outputLabel value="Содержимое" for="content"/>
+        <h:inputText id="content" value="#{cc.attrs.articleItem.content}"/>
+    </cc:implementation>
+
+</ui:composition>
+

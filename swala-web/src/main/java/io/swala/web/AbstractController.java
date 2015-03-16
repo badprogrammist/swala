@@ -9,6 +9,7 @@ import io.swala.domain.AbstractEntity;
 import io.swala.service.Service;
 import java.io.Serializable;
 import java.util.List;
+import org.apache.myfaces.orchestra.conversation.Conversation;
 
 /**
  *
@@ -27,9 +28,12 @@ public abstract class AbstractController<E extends AbstractEntity> implements Se
     private E current;
     private String id;
 
+    
     public AbstractController() {
     }
 
+    
+    
     public String gotoList() {
         return Navigation.getURL(LIST_MAPPING_URL_PART +"_"+ getMappingUrlKey());
     }
@@ -47,6 +51,7 @@ public abstract class AbstractController<E extends AbstractEntity> implements Se
     }
     
     public void prepareCreate() {
+        beginConversation();
         setCurrent(getService().createEmptyEntity());
     }
     
@@ -55,22 +60,27 @@ public abstract class AbstractController<E extends AbstractEntity> implements Se
     }
     
     public void prepareEdit() {
+        beginConversation();
         initCurrentFromId();
     }
     
     public void prepareList() {
     }
     
-    public void store() {
+    public String store() {
         if (current != null) {
             getService().store(current);
         }
+        endConversation();
+        return gotoList();
     }
     
-    public void update() {
+    public String update() {
         if (current != null) {
             getService().update(current);
         }
+        endConversation();
+        return gotoList();
     }
     
     public void remove() {
@@ -113,4 +123,14 @@ public abstract class AbstractController<E extends AbstractEntity> implements Se
         }
     }
     
+    public void beginConversation() {
+    }
+    
+    public void endConversation() {
+        getConversation().invalidate();
+    }
+    
+    protected Conversation getConversation() {
+        return Conversation.getCurrentInstance();
+    }
 }

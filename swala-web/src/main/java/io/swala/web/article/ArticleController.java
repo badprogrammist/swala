@@ -6,22 +6,25 @@
 package io.swala.web.article;
 
 import com.ocpsoft.pretty.faces.annotation.URLAction;
+import com.ocpsoft.pretty.faces.annotation.URLBeanName;
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import com.ocpsoft.pretty.faces.annotation.URLMappings;
 import io.swala.domain.article.Article;
 import io.swala.service.Service;
 import io.swala.service.article.ArticleService;
 import io.swala.web.AbstractController;
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.springframework.context.annotation.Scope;
 
 /**
  *
  * @author Ильдар
  */
 @Named("article")
-@SessionScoped
+@URLBeanName("article")
+@Scope("conversation")
+//@Scope("session")
 @URLMappings(mappings = {
     @URLMapping(id = "LIST_ARTICLE", pattern = "/articles", viewId = "/pages/article/list.xhtml"),
     @URLMapping(id = "CREATE_ARTICLE", pattern = "/article/new", viewId = "/pages/article/create.xhtml"),

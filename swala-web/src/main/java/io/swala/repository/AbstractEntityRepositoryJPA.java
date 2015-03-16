@@ -30,11 +30,11 @@ public abstract class AbstractEntityRepositoryJPA<E extends AbstractEntity> impl
     public void store(E entity) {
         getEntityManager().persist(getEntityManager().merge(entity));
     }
-    
+
     @Override
     public void remove(Long id) {
         E entity = get(id);
-        if(entity != null) {
+        if (entity != null) {
             remove(entity);
         }
     }
@@ -43,12 +43,12 @@ public abstract class AbstractEntityRepositoryJPA<E extends AbstractEntity> impl
     public void remove(E entity) {
         getEntityManager().remove(getEntityManager().merge(entity));
     }
-    
+
     @Override
     public void update(E entity) {
         getEntityManager().merge(entity);
     }
-    
+
     @Override
     public List<E> getAll() {
         final CriteriaBuilder builder = this.getEntityManager().getCriteriaBuilder();

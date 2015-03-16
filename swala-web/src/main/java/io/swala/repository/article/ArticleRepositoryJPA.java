@@ -19,11 +19,16 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ArticleRepositoryJPA extends AbstractEntityRepositoryJPA<Article> implements ArticleRepository {
 
-    @PersistenceContext
+   
     private EntityManager entityManager;
 
     public ArticleRepositoryJPA() {
         super(Article.class);
+    }
+    
+     @PersistenceContext
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
     
     @Override

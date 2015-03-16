@@ -10,8 +10,8 @@ import io.swala.domain.article.Article;
 import io.swala.domain.article.ArticleRepository;
 import io.swala.service.AbstractService;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *

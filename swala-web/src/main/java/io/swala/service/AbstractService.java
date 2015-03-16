@@ -8,7 +8,7 @@ package io.swala.service;
 import io.swala.domain.AbstractEntity;
 import io.swala.domain.EntityRepository;
 import java.util.List;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *

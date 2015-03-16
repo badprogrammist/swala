@@ -45,8 +45,8 @@ public abstract class AbstractEntityRepositoryJPA<E extends AbstractEntity> impl
     }
 
     @Override
-    public void update(E entity) {
-        getEntityManager().merge(entity);
+    public E update(E entity) {
+        return getEntityManager().merge(entity);
     }
 
     @Override

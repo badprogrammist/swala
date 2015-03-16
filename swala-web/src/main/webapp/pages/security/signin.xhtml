@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                template="/layouts/app.xhtml">
+
+    <ui:define name="page_title">
+        Вход
+    </ui:define>
+
+    <ui:define name="app_content">
+        <h:form id="loginForm" prependId="false">
+            <h:panelGrid columns="3">
+                <h:outputLabel for="j_username" value="Логин * " />  
+                <h:inputText id="j_username" required="true" label="username" />  
+                <h:message for="j_username" style="color:red"/>
+
+                <h:outputLabel for="j_password" value="Пароль * " />  
+                <h:inputSecret id="j_password" label="password" required="true" />  
+                <h:message for="j_password" style="color:red"/>
+
+                <h:outputLabel for="_spring_security_remember_me" value="Запомнить меня " />
+                <h:selectBooleanCheckbox  id="_spring_security_remember_me" />        
+            </h:panelGrid>
+
+            <h:commandButton
+                type="submit"
+                id="login"
+                value="Login" 
+                action="#{security.signIn()}" />
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

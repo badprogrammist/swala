@@ -3,15 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.swala.service.article;
-
-import io.swala.domain.article.Article;
-import io.swala.service.Service;
+package io.swala.domain;
 
 /**
  *
  * @author Ильдар
  */
-public interface ArticleService extends Service<Article> {
-    
+public interface EnumType {
+    public String getTitle();
 }

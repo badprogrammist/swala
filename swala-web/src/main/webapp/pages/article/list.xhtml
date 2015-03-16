@@ -4,6 +4,7 @@
                 template="/layouts/app.xhtml"
                 xmlns:news="http://xmlns.jcp.org/jsf/composite/news"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:sec="http://www.springframework.org/security/tags"
                 xmlns:article="http://xmlns.jcp.org/jsf/composite/article">
     <ui:define name="page_title">
         Статьи
@@ -14,9 +15,11 @@
             <h:link value="Добавить статью" outcome="#{article.gotoCreate()}"/>
             <article:list articleItems="#{article.all}">
                 <f:facet name="itemFacet">
-                    <h:link outcome="#{article.gotoEdit()}" value="Редактировать">
-                        <f:param name="id" value="#{articleItem.id}"/>
-                    </h:link>
+                    <ui:fragment rendered="#{sec:isAllowed('/article/edit/**', 'GET')}">
+                        <h:link outcome="#{article.gotoEdit()}" value="Редактировать">
+                            <f:param name="id" value="#{articleItem.id}"/>
+                        </h:link>
+                    </ui:fragment> 
                 </f:facet>
             </article:list>
         </h:form>

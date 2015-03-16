@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface EntityRepository<E extends AbstractEntity> extends Serializable {
     public void store(E entity);
-    public void update(E entity);
+    public E update(E entity);
     public void remove(E entity);
     public void remove(Long id);
     public E get(Long id);

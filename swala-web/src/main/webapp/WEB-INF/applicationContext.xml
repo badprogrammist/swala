@@ -5,11 +5,13 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:security="http://www.springframework.org/schema/security"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
-        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
     <context:annotation-config/>
     <context:component-scan  base-package="io.swala"/>
@@ -105,12 +107,38 @@
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager"/> 
     
-<!--    <bean class="org.springframework.cache.ehcache.EhCacheCacheManager">
-        <property name="cacheManager">
-            <bean class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-                <property name="configLocation" value="/WEB-INF/ehcache.xml"/>
-            </bean>
-        </property>
-    </bean>-->
+    <!--
+        Security
+    -->
+	
+    <bean id="passwordEncoder" class="io.swala.security.SaltedSHA256PasswordEncoder">
+        <constructor-arg value="secret" />
+    </bean>
+        
+    <security:authentication-manager id="authenticationManager">
+        <security:authentication-provider user-service-ref="userService">
+            <security:password-encoder ref="passwordEncoder"></security:password-encoder>
+        </security:authentication-provider>
+    </security:authentication-manager>
+    
+    <security:http 
+        realm="Protected API"
+        use-expressions="true"
+        auto-config="true"
+        create-session="stateless"
+        authentication-manager-ref="authenticationManager">
+        <security:form-login login-page="/signin" />
+        <security:http-basic />
+        <security:remember-me key="swalasalt" token-validity-seconds="2419200" />
+        <security:logout  />
+        <security:intercept-url pattern="/signin" access="permitAll" />
+        <security:intercept-url pattern="/signup" access="permitAll" />
+        
+        <security:intercept-url method="GET" pattern="/article/edit/**" access="hasRole('USER')" />
+        <security:intercept-url method="GET" pattern="/article/new" access="hasRole('USER')" />
+        <security:intercept-url method="GET" pattern="/article/**" access="permitAll" />
+        <security:intercept-url method="GET" pattern="/articles" access="permitAll" />
+    </security:http>
+
 
 </beans>

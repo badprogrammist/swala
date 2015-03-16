@@ -3,15 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.swala.service.article;
-
-import io.swala.domain.article.Article;
-import io.swala.service.Service;
+package io.swala.security;
 
 /**
  *
  * @author Ильдар
  */
-public interface ArticleService extends Service<Article> {
-    
+public interface SecurityService {
+    public boolean register(UserRegistrationData registrationData);
+    public UserTransfer authenticate(String username, String password);
 }

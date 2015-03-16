@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class DefaultArticleService extends AbstractService<Article> implements ArticleService{
+public class DefaultArticleService extends AbstractService<Article> implements ArticleService {
 
     @Inject
     private ArticleRepository articleRepository;

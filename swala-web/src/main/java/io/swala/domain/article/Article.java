@@ -6,6 +6,7 @@
 package io.swala.domain.article;
 
 import io.swala.domain.AbstractEntity;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
@@ -18,6 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "articles")
+@Cacheable
 @NamedQueries({
     @NamedQuery(name = "Article.findAll",query = "Select c from Article  c")
 })

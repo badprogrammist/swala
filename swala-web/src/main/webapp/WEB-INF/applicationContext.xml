@@ -14,10 +14,10 @@
     <context:annotation-config/>
     <context:component-scan  base-package="io.swala"/>
     
-     <!--1. initialization of all orchestra modules (required for core15 module)--> 
+    <!--1. initialization of all orchestra modules (required for core15 module)--> 
     <import resource="classpath*:/META-INF/spring-orchestra-init.xml" />
     
-     <!--2. the conversation scopes--> 
+    <!--2. the conversation scopes--> 
     <bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
         <property name="scopes">
             <map>
@@ -48,13 +48,13 @@
     </bean>
     
     
-     <!--3. the "entity manager" manager--> 
+    <!--3. the "entity manager" manager--> 
     <bean id="persistentContextConversationInterceptor"
           class="org.apache.myfaces.orchestra.conversation.spring.PersistenceContextConversationInterceptor">
         <property name="persistenceContextFactory" ref="persistenceContextFactory"/>
     </bean>
 
-     <!--4. conversation - persistence adapter--> 
+    <!--4. conversation - persistence adapter--> 
     <bean id="persistenceContextFactory"
           class="org.apache.myfaces.orchestra.conversation.spring.JpaPersistenceContextFactory">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
@@ -88,6 +88,10 @@
         <property name="jpaProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop> 
+                <prop key="hibernate.cache.use_query_cache">true</prop> 
+                <prop key="hibernate.cache.provider_class">net.sf.ehcache.hibernate.SingletonEhCacheProvider</prop> 
+                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</prop>
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.format_sql">true</prop>
@@ -101,5 +105,12 @@
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager"/> 
     
+<!--    <bean class="org.springframework.cache.ehcache.EhCacheCacheManager">
+        <property name="cacheManager">
+            <bean class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+                <property name="configLocation" value="/WEB-INF/ehcache.xml"/>
+            </bean>
+        </property>
+    </bean>-->
 
 </beans>

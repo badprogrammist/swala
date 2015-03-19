@@ -5,11 +5,19 @@
  */
 package io.swala.security;
 
+import io.swala.domain.user.User;
+import io.swala.security.exception.SecurityException;
+
 /**
  *
  * @author Ильдар
  */
 public interface SecurityService {
-    public boolean register(UserRegistrationData registrationData);
-    public UserTransfer authenticate(String username, String password);
+    public boolean register(Credentials credentials);
+    
+    public UserTransfer authenticate(Credentials credentials) throws SecurityException;
+    
+    public boolean isAuthenticated();
+    
+    public User getPrincipal();
 }

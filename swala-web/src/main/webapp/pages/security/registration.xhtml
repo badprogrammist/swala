@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/layouts/app.xhtml">
+    
+    <ui:define name="page_title">
+        Регистрация
+    </ui:define>
+    
+    <ui:define name="app_content">
+        <h:form>
+            <h:outputLabel for="login" value="Логин* " />  
+            <h:inputText
+                id="login"
+                required="true"
+                value="#{security.login}"
+                label="Логин" />  
+            <h:message for="login" style="color:red"/>
+
+            <h:outputLabel for="password" value="Пароль* " />  
+            <h:inputSecret
+                id="password"
+                label="Пароль"
+                value="#{security.password}"
+                required="true" />  
+            <h:message for="login" style="color:red"/>
+
+
+            <h:commandButton
+                type="submit"
+                value="Зарегистрироваться" 
+                action="#{security.signUp()}" />
+        </h:form>
+    </ui:define>
+    
+</ui:composition>
+

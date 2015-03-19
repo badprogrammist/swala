@@ -28,7 +28,7 @@ public abstract class AbstractEntityRepositoryJPA<E extends AbstractEntity> impl
 
     @Override
     public void store(E entity) {
-        getEntityManager().persist(getEntityManager().merge(entity));
+        getEntityManager().merge(entity);
     }
 
     @Override

@@ -12,11 +12,12 @@ import org.ocpsoft.common.util.Strings;
  *
  * @author Ильдар
  */
-public class UserRegistrationData {
+public class Credentials {
+    
     private String login;
     private String password;
 
-    public UserRegistrationData(String login, String password) {
+    public Credentials(String login, String password) {
         this.login = login;
         this.password = password;
     }

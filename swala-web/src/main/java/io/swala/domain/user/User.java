@@ -14,6 +14,7 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -35,10 +36,12 @@ import org.springframework.security.core.userdetails.UserDetails;
             query = "Select c from User c where c.credential.login = :login")})
 public class User extends AbstractEntity implements UserDetails {
 
+    public static final User NULL = new User(new UserCredential("NULL", "NULL"));
+    
     @Embedded
     private UserCredential credential;
     
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UserRoleRelation> roles = new HashSet<>();
 
     public User() {
@@ -56,6 +59,10 @@ public class User extends AbstractEntity implements UserDetails {
         this.credential = credential;
     }
 
+    public boolean isNull() {
+        return this == NULL;
+    }
+    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (roles == null) {

@@ -12,10 +12,12 @@
     <ui:define name="app_content">
         <h3>Статьи</h3>
         <h:form>
-            <h:link value="Добавить статью" outcome="#{article.gotoCreate()}"/>
+            <ui:fragment rendered="#{security.isAllowed(article.gotoCreate())}">
+                <h:link value="Добавить статью" outcome="#{article.gotoCreate()}"/>
+            </ui:fragment>
             <article:list articleItems="#{article.all}">
                 <f:facet name="itemFacet">
-                    <ui:fragment rendered="#{sec:isAllowed('/article/edit/**', 'GET')}">
+                    <ui:fragment rendered="#{security.isAllowed(article.gotoEdit())}">
                         <h:link outcome="#{article.gotoEdit()}" value="Редактировать">
                             <f:param name="id" value="#{articleItem.id}"/>
                         </h:link>

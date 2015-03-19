@@ -16,7 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @author Ильдар
  */
 public interface UserService extends Service<User>,UserDetailsService {
-    public Long registerNewUser(UserCredential credential, Role role);
+    public void registerNewUser(UserCredential credential, Role role);
     public Role getRoleByName(String name);
     public Role createRole(String name);
 }

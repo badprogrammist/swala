@@ -125,20 +125,18 @@
         realm="Protected API"
         use-expressions="true"
         auto-config="true"
-        create-session="stateless"
+        access-denied-page="/access_denied" 
         authentication-manager-ref="authenticationManager">
-        <security:form-login login-page="/signin" />
+        <security:form-login login-page="/login"  />
         <security:http-basic />
-        <security:remember-me key="swalasalt" token-validity-seconds="2419200" />
-        <security:logout  />
-        <security:intercept-url pattern="/signin" access="permitAll" />
-        <security:intercept-url pattern="/signup" access="permitAll" />
+        <security:remember-me  key="swalasalt" />
+        <security:logout logout-url="/signout" logout-success-url="/login"  />
+        <security:intercept-url pattern="/login" access="permitAll" />
+        <security:intercept-url pattern="/registration" access="permitAll" />
         
         <security:intercept-url method="GET" pattern="/article/edit/**" access="hasRole('USER')" />
         <security:intercept-url method="GET" pattern="/article/new" access="hasRole('USER')" />
         <security:intercept-url method="GET" pattern="/article/**" access="permitAll" />
         <security:intercept-url method="GET" pattern="/articles" access="permitAll" />
     </security:http>
-
-
 </beans>

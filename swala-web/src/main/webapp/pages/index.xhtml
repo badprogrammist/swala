@@ -1,7 +1,8 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="/layouts/app.xhtml">
+                template="/layouts/app.xhtml"
+                xmlns:security="http://xmlns.jcp.org/jsf/composite/security">
     
     <ui:define name="page_title">
         Добро пожаловать в Swala
@@ -9,6 +10,10 @@
     
     <ui:define name="app_content">
         Content
+        <ui:fragment rendered="#{security.authenticated}">
+            #{security.principal.username}
+        </ui:fragment> 
+        <security:signoutButton/>
     </ui:define>
     
 </ui:composition>

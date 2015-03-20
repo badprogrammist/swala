@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
-    
-    
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
@@ -10,7 +8,6 @@
         <param-name>org.apache.myfaces.annotation.SCAN_PACKAGES</param-name>
         <param-value>io.swala</param-value>
     </context-param>
-
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
@@ -20,35 +17,36 @@
     <listener>
         <listener-class>org.apache.myfaces.orchestra.conversation.servlet.ConversationManagerSessionListener</listener-class>
     </listener>
-    
-    <!-- Integrate JSF and Spring End-->
-    <!-- Enable Spring Filter, Spring Security works on the concept of Filters -->
+
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
     </filter>
-     
     <filter-mapping>
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
-<!--        <dispatcher>FORWARD</dispatcher>
-        <dispatcher>REQUEST</dispatcher>-->
     </filter-mapping>
-<!--    <filter>
-        <filter-name>PrettyFilter</filter-name>
-        <filter-class>org.ocpsoft.rewrite.servlet.RewriteFilter</filter-class>
-        <async-supported>true</async-supported>
+    
+    <!--Фильтры для удаления conversationContext из ресурсов-->
+    <filter>
+        <filter-name>requestParameterFilter</filter-name>
+        <filter-class>org.apache.myfaces.orchestra.requestParameterProvider.RequestParameterServletFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>myOrchestraFilter</filter-name>
+        <filter-class>io.swala.web.filter.OrchestraParamControlFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>PrettyFilter</filter-name>
+        <filter-name>requestParameterFilter</filter-name>
         <url-pattern>/*</url-pattern>
-        <dispatcher>FORWARD</dispatcher>
-        <dispatcher>REQUEST</dispatcher>
-        <dispatcher>INCLUDE</dispatcher>
-        <dispatcher>ASYNC</dispatcher>
-        <dispatcher>ERROR</dispatcher>
-    </filter-mapping>-->
-
+        <servlet-name>Faces Servlet</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>myOrchestraFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <servlet-name>Faces Servlet</servlet-name>
+    </filter-mapping>
+    
     
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
@@ -64,17 +62,14 @@
         </init-param>
         <load-on-startup>2</load-on-startup>
     </servlet>
-    
     <context-param>
         <param-name>com.ocpsoft.pretty.BASE_PACKAGES</param-name>
         <param-value>io.swala</param-value>
     </context-param>
-    
     <context-param>
         <param-name>primefaces.THEME</param-name>
         <param-value>none</param-value>
     </context-param>
-    
     <context-param>
         <param-name>org.apache.myfaces.CACHE_EL_EXPRESSIONS</param-name>
         <param-value>always</param-value>
@@ -83,7 +78,6 @@
         <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
         <param-value>/WEB-INF/security.taglib.xml</param-value>
     </context-param>
-    
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/</url-pattern>
